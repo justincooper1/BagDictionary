@@ -60,7 +60,13 @@ public:
 	// function returns false and returnValue remains unchanged.
 	bool removeTop(E& returnValue) override
 	{
-
+		if (curSize <= 0)
+		{
+			return false;
+		}
+		returnValue = data[curSize - 1];
+		curSize--;
+		return true;
 	}
 
 	// Finds the record using returnValue and if the record is found updates
