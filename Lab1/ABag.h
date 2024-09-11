@@ -7,14 +7,14 @@ class ABag : public Bag<E> {
 private:
 	static const int INITIAL_CAPACITY = 10;
 	E* data; // Stores items in bag
-	int curCapacity; // Current bag capacity
+	int maxSize; // Max size of bag
 	int curSize; // Current number of items
 
 public:
 	// Constructor
-	ABag(size_t initCapacity = INITIAL_CAPACITY) : curCapacity(initCapacity), curSize(0)
+	ABag(size_t initCapacity = INITIAL_CAPACITY) : maxSize(initCapacity), curSize(0)
 	{
-		data = new E[curCapacity];
+		data = new E[maxSize];
 	}
 	// Destructor
 	~ABag() override
@@ -26,7 +26,12 @@ public:
 	// successful
 	bool addItem(const E& item) override
 	{
-
+		if (curSize < bagCapacity()) // Uses bagCapacity() function
+		{
+			data[curSize++] = item;
+			return true;
+		}
+		return false;
 	}
 
 	// Looks for 'item' in the bag and if found updates 'item' with the 
@@ -34,7 +39,20 @@ public:
 	// and the method returns false.
 	bool removeItem(E& item) override
 	{
-
+		for (int i = 0; i < curSize; ++i)
+		{
+			if (data[i] == item)
+			{
+				item = data[i];
+				for (int k = i; k < curSize - 1; ++k)
+				{
+					data[k] = data[k + 1];
+				}
+				curSize--;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Removes the top record from the bag, puts it in returnValue, and
@@ -83,6 +101,6 @@ public:
 	// get the capacity of the bag (size of your bag's array)
 	int bagCapacity() const override
 	{
-
+		return maxSize;
 	}
 };
