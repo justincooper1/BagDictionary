@@ -49,9 +49,9 @@ public:
 	// If the record is not found the function returns false.
 	bool remove(const Key& k, E& rtnVal) override
 	{
-		KVpair<Key, E> kv;
 		if (search(k, rtnVal))
 		{
+			KVpair<Key, E> kv(k, rtnVal);
 			bag->removeItem(kv); // Uses removeItem()
 			rtnVal = kv.value();
 			return true;
@@ -67,6 +67,7 @@ public:
 	bool removeAny(E& returnValue) override
 	{
 		KVpair<Key, E> kv;
+
 		if (bag->removeTop(kv)) // Uses removeTop()
 		{
 			returnValue = kv.value();
@@ -81,12 +82,20 @@ public:
 	// If the record is not found the function returns false.
 	bool search(const Key& k, E& returnValue) const override
 	{
+		KVpair<Key, E> kv;
+		kv.setKey(k);
 
+		if (bag->find(kv))
+		{
+			returnValue = kv.value();
+			return true;
+		}
+		return false;
 	}
 
 	// Return the number of records in the dictionary.
 	int size() const override
 	{
-
+		return bag->numItems();
 	}
 };
