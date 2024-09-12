@@ -75,7 +75,15 @@ public:
 	// except that the found record is not removed from the bag.
 	bool find(E& returnValue) const override
 	{
-		
+		for (int i = 0; i < curSize; ++i)
+		{
+			if (data[i] == returnValue)
+			{
+				returnValue = data[i];
+				return true;
+			}
+		}
+		return false;
 	}
 
 	// Inspect the top of the bag.  If the bag is empty return
@@ -83,25 +91,30 @@ public:
 	// 'item' with the contents of the bag.
 	bool inspectTop(E& item) const override
 	{
-
+		if (curSize > 0)
+		{
+			item = data[curSize - 1];
+			return true;
+		}
+		return false;
 	}
 
 	// empties the bag
 	void emptyBag() override
 	{
-
+		curSize = 0;
 	}
 
 	// use the += operator to add an item to the bag
 	bool operator+=(const E& addend) override
 	{
-
+		return addItem(addend);
 	}
 
 	// get the number of items in the bag
 	int numItems() const override
 	{
-
+		return curSize;
 	}
 
 	// get the capacity of the bag (size of your bag's array)
