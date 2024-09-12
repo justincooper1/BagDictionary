@@ -108,7 +108,7 @@ public:
 	// use the += operator to add an item to the bag
 	bool operator+=(const E& addend) override
 	{
-		return addItem(addend);
+		return addItem(addend); // Uses addItem()
 	}
 
 	// get the number of items in the bag

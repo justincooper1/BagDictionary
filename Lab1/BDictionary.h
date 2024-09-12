@@ -85,7 +85,7 @@ public:
 		KVpair<Key, E> kv;
 		kv.setKey(k);
 
-		if (bag->find(kv))
+		if (bag->find(kv)) // Uses find()
 		{
 			returnValue = kv.value();
 			return true;
@@ -96,6 +96,6 @@ public:
 	// Return the number of records in the dictionary.
 	int size() const override
 	{
-		return bag->numItems();
+		return bag->numItems(); // Uses numItems()
 	}
 };
