@@ -29,7 +29,7 @@ public:
 	// Reinitialize dictionary
 	void clear() override
 	{
-
+		bag->emptyBag(); //Uses emptyBag()
 	}
 
 	// Insert a record
@@ -38,7 +38,8 @@ public:
 	// Return true if insert is successful and false otherwise
 	bool insert(const Key& k, const E& e) override
 	{
-
+		KVpair<Key, E> kv(k, e);
+		return *bag += kv; // Uses += operator
 	}
 
 	// Looks for a record using the key and if found does the following:
@@ -48,7 +49,14 @@ public:
 	// If the record is not found the function returns false.
 	bool remove(const Key& k, E& rtnVal) override
 	{
-
+		KVpair<Key, E> kv;
+		if (search(k, rtnVal))
+		{
+			bag->removeItem(kv); // Uses removeItem()
+			rtnVal = kv.value();
+			return true;
+		}
+		return false;
 	}
 
 	// Takes an arbitrary record from the dictionary and does the following:
@@ -58,7 +66,13 @@ public:
 	// If the dictionary is empty the function returns false.
 	bool removeAny(E& returnValue) override
 	{
-
+		KVpair<Key, E> kv;
+		if (bag->removeTop(kv)) // Uses removeTop()
+		{
+			returnValue = kv.value();
+			return true;
+		}
+		return false;
 	}
 
 	// Looks for a record using the key and if found does the following:

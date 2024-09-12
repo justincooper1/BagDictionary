@@ -3,7 +3,8 @@
 #include "bagADT.h"
 
 template <class E>
-class ABag : public Bag<E> {
+class ABag : public Bag<E> 
+{
 private:
 	static const int INITIAL_CAPACITY = 10;
 	E* data; // Stores items in bag
@@ -60,13 +61,12 @@ public:
 	// function returns false and returnValue remains unchanged.
 	bool removeTop(E& returnValue) override
 	{
-		if (curSize <= 0)
+		if (inspectTop(returnValue)) // Uses inspectTop()
 		{
-			return false;
+			curSize--;
+			return true;
 		}
-		returnValue = data[curSize - 1];
-		curSize--;
-		return true;
+		return false;
 	}
 
 	// Finds the record using returnValue and if the record is found updates
